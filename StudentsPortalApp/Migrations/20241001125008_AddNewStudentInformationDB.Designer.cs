@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentsPortalApp.EFContext;
 
@@ -9,10 +10,12 @@ using StudentsPortalApp.EFContext;
 
 namespace StudentsPortalApp.Migrations
 {
-    [DbContext(typeof(StudentPortalDBContext))]
-    partial class StudentPortalDBContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(StudentInformationlDBContext))]
+    [Migration("20241001125008_AddNewStudentInformationDB")]
+    partial class AddNewStudentInformationDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +24,7 @@ namespace StudentsPortalApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("StudentsPortalApp.Models.Login", b =>
+            modelBuilder.Entity("StudentsPortalApp.StudentModel.Login", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,13 +45,13 @@ namespace StudentsPortalApp.Migrations
                     b.ToTable("Login");
                 });
 
-            modelBuilder.Entity("StudentsPortalApp.Models.StudentCurriculamDetails", b =>
+            modelBuilder.Entity("StudentsPortalApp.StudentModel.StudentCurriculamDetails", b =>
                 {
-                    b.Property<int>("StudentRollNo")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentRollNo"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Class")
                         .HasColumnType("int");
@@ -68,24 +71,27 @@ namespace StudentsPortalApp.Migrations
                     b.Property<int>("MathsMarks")
                         .HasColumnType("int");
 
+                    b.Property<int>("RollNo")
+                        .HasColumnType("int");
+
                     b.Property<int>("SSTMarks")
                         .HasColumnType("int");
 
                     b.Property<int>("ScienceMarks")
                         .HasColumnType("int");
 
-                    b.HasKey("StudentRollNo");
+                    b.HasKey("Id");
 
                     b.ToTable("StudentCurriculamDetails");
                 });
 
-            modelBuilder.Entity("StudentsPortalApp.Models.StudentPersonalDetails", b =>
+            modelBuilder.Entity("StudentsPortalApp.StudentModel.StudentPersonalDetails", b =>
                 {
-                    b.Property<int>("RollNo")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RollNo"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -105,23 +111,32 @@ namespace StudentsPortalApp.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RollNo");
+                    b.Property<int>("RollNo")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.ToTable("StudentPersonalDetails");
                 });
 
-            modelBuilder.Entity("StudentsPortalApp.Models.StudentRecords", b =>
+            modelBuilder.Entity("StudentsPortalApp.StudentModel.StudentRecords", b =>
                 {
-                    b.Property<int>("RollNo")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RollNo"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("RollNo")
+                        .HasColumnType("int");
 
                     b.Property<string>("StudentName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RollNo");
+                    b.HasKey("Id");
 
                     b.ToTable("StudentRecords");
                 });

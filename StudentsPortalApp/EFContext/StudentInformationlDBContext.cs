@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StudentsPortalApp.Models;
+using StudentsPortalApp.StudentModel;
 
 namespace StudentsPortalApp.EFContext
 {
-    public class StudentPortalDBContext: DbContext
+    public class StudentInformationlDBContext:DbContext
     {
-        public StudentPortalDBContext(DbContextOptions<StudentPortalDBContext> options):base(options)
+        public StudentInformationlDBContext(DbContextOptions<StudentInformationlDBContext> contextOptions): base(contextOptions)
         {
             
         }
