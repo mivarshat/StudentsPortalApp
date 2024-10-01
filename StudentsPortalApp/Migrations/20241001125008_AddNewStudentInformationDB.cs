@@ -5,7 +5,7 @@
 namespace StudentsPortalApp.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class AddNewStudentInformationDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,8 +28,9 @@ namespace StudentsPortalApp.Migrations
                 name: "StudentCurriculamDetails",
                 columns: table => new
                 {
-                    StudentRollNo = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    RollNo = table.Column<int>(type: "int", nullable: false),
                     Class = table.Column<int>(type: "int", nullable: false),
                     MathsMarks = table.Column<int>(type: "int", nullable: false),
                     ScienceMarks = table.Column<int>(type: "int", nullable: false),
@@ -41,15 +42,16 @@ namespace StudentsPortalApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentCurriculamDetails", x => x.StudentRollNo);
+                    table.PrimaryKey("PK_StudentCurriculamDetails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "StudentPersonalDetails",
                 columns: table => new
                 {
-                    RollNo = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    RollNo = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Class = table.Column<int>(type: "int", nullable: false),
                     Division = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -59,20 +61,22 @@ namespace StudentsPortalApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentPersonalDetails", x => x.RollNo);
+                    table.PrimaryKey("PK_StudentPersonalDetails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "StudentRecords",
                 columns: table => new
                 {
-                    RollNo = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    RollNo = table.Column<int>(type: "int", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false),
                     StudentName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentRecords", x => x.RollNo);
+                    table.PrimaryKey("PK_StudentRecords", x => x.Id);
                 });
         }
 
