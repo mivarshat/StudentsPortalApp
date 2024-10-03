@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using StudentsPortalApp.EFContext;
+using StudentsPortalApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
