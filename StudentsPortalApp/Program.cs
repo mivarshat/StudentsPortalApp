@@ -1,12 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Debugging;
 using StudentsPortalApp.EFContext;
 using StudentsPortalApp.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Configure Serilog
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("logs/MyAppLog.txt")
+    .CreateLogger();
+
+
+builder.Host.UseSerilog();
 
 // Add services to the container.
 //builder.Services.AddDbContext<StudentPortalDBContext>(options => options.UseSqlServer("Server=tcp:studentportaldb-server.database.windows.net,1433;Initial Catalog=studentinformationdb;Persist Security Info=False;User ID=HVSolutionTech;Password=StudentPortal@123;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
