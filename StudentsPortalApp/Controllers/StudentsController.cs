@@ -16,18 +16,7 @@ namespace StudentsPortalApp.Controllers
         {
             _studentService = studentService;
             _logger = logger;
-        }
-
-        // GET: api/students
-        [HttpGet]
-        [Route("student")]
-        [ApiVersion("1.0")]
-        public async Task<IActionResult> GetStudentsRecord(bool active)
-        {
-            _logger.LogInformation("Accessing Student's Record Process started");
-            var studentsRecords = await _studentService.GetStudentRecords(active);
-            return Ok(studentsRecords);
-        }
+        }       
 
         // GET: api/students/5
         [HttpGet]
@@ -44,7 +33,7 @@ namespace StudentsPortalApp.Controllers
             return NotFound("Student not found");
         }
 
-        // GET: api/students
+        // GET: api/students/personal
         [HttpGet]
         [Route("student/personal")]
         [ApiVersion("1.0")]
@@ -55,7 +44,7 @@ namespace StudentsPortalApp.Controllers
             return Ok(studentsRecords);
         }
 
-        // GET: api/students/5
+        // GET: api/students/personal/5
         [HttpGet]
         [Route("student/personal/{rollNo}")]
         [ApiVersion("1.0")]
@@ -70,7 +59,7 @@ namespace StudentsPortalApp.Controllers
             return NotFound("Student not found");
         }
 
-        // GET: api/students
+        // GET: api/students/curriculam
         [HttpGet]
         [Route("student/curriculam")]
         [ApiVersion("1.0")]
@@ -81,7 +70,7 @@ namespace StudentsPortalApp.Controllers
             return Ok(studentsRecords);
         }
 
-        // GET: api/students/5
+        // GET: api/students/curriculam/5
         [HttpGet]
         [Route("student/curriculam/{rollNo}")]
         [ApiVersion("1.0")]
@@ -96,6 +85,7 @@ namespace StudentsPortalApp.Controllers
             return NotFound("Student not found");
         }
 
+        //Post: api/students
         [HttpPost]
         [ApiVersion("1.0")]
         public async Task<ActionResult<string>> AddStudentPersonalDetails([FromBody] StudentPersonalDetails studentPersonalDetails)
@@ -109,6 +99,7 @@ namespace StudentsPortalApp.Controllers
             return BadRequest("Failed adding student");
         }
 
+        //Patch: api/students/5
         [HttpPatch]
         [Route("student/{rollNo}")]
         [ApiVersion("1.0")]
@@ -123,6 +114,7 @@ namespace StudentsPortalApp.Controllers
             return NotFound(result);
         }
 
+        //Patch: api/students/personal/5
         [HttpPatch]
         [Route("student/personal/{rollNo}")]
         [ApiVersion("1.0")]
@@ -137,6 +129,7 @@ namespace StudentsPortalApp.Controllers
             return NotFound(result);
         }
 
+        //Patch: api/students/curriculam/5
         [HttpPatch]
         [Route("student/curriculam/{rollNo}")]
         [ApiVersion("1.0")]
