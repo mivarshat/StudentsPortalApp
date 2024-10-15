@@ -1,4 +1,5 @@
 ﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudentsPortalApp.Services;
 using StudentsPortalApp.StudentModel;
@@ -20,6 +21,7 @@ namespace StudentsPortalApp.Controllers
 
         // GET: api/students/5
         [HttpGet]
+        [Authorize]
         [Route("student/{rollNo}")]
         [ApiVersion("1.0")]
         public async Task<IActionResult> GetStudentRecordByRollNo(int rollNo)

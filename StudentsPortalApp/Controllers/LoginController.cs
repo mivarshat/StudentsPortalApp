@@ -1,6 +1,6 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using StudentsPortalApp.Services;
+using StudentsPortalApp.StudentModel;
 
 namespace StudentsPortalApp.Controllers
 {
@@ -35,6 +35,20 @@ namespace StudentsPortalApp.Controllers
             _logger.LogInformation("User un-registration Process started");
             var result = _loginService.UnRegisterUser(rollNo).Result;
             return result;
+        }
+
+        [HttpPost]
+        [ApiVersion("1.0")]
+        [Route("Validate")]
+        public async Task<ActionResult<string>> ValidateUser([FromBody] Login login)
+        {
+            _logger.LogInformation("User Validation Process started");
+            var result = await _loginService.ValidateUser(login);
+            if (result.Item1 == 200)
+            {
+                return Ok(result.Item2);
+            }
+            return Unauthorized(result.Item2);
         }
     }
 }

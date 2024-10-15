@@ -7,6 +7,6 @@ namespace StudentsPortalApp.Services
     {
         public Task<ActionResult<string>> RegisterUser(int rollNo);
         public Task<string> UnRegisterUser(int rollNo);
-        //public Task<StudentPersonalDetails> ValidateUser(int rollNo);
+        public Task<(int, string)> ValidateUser(Login login);
     }
 }

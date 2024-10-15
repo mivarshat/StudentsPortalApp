@@ -1,13 +1,17 @@
 using FluentValidation.AspNetCore;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Debugging;
 using StudentsPortalApp.EFContext;
 using StudentsPortalApp.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,12 +27,40 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Host.UseSerilog();
 
+//builder.Services.AddAuthentication(options =>
+//options.DefaultAuthenticateScheme = DefaultAuthenticationTypes.ApplicationCookie
+//)
+//.AddCookie(DefaultAuthenticationTypes.ApplicationCookie, options =>
+//{
+//    options.LoginPath = "/Login";
+//    options.LogoutPath = "/Logout";
+//});
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+               .AddJwtBearer(options =>
+               {
+                   options.TokenValidationParameters = new TokenValidationParameters
+                   {
+                       ValidateIssuer = true,
+                       ValidateAudience = true,
+                       ValidateLifetime = true,
+                       ValidateIssuerSigningKey = true,
+                       ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                       ValidAudience = builder.Configuration["Jwt:Audience"],
+                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                   };
+               });
 // Add services to the container.
 //builder.Services.AddDbContext<StudentPortalDBContext>(options => options.UseSqlServer("Server=tcp:studentportaldb-server.database.windows.net,1433;Initial Catalog=studentinformationdb;Persist Security Info=False;User ID=HVSolutionTech;Password=StudentPortal@123;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 builder.Services.AddDbContext<StudentInformationlDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
 
 builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = null;
+    })
     .AddFluentValidation(c => c.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+    
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -78,6 +110,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 
 app.UseAuthorization();
 
